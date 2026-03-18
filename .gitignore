@@ -1,0 +1,35 @@
+# node modules
+node_modules/
+
+# env files (VERY IMPORTANT)
+.env
+
+# logs
+logs
+*.log
+npm-debug.log*
+
+# OS files
+.DS_Store
+Thumbs.db
+
+# coverage
+coverage/
+
+# build
+dist/
+build/
+
+# temp
+tmp/
+temp/
+
+# uploads (if local multer storage)
+uploads/
+
+# vscode
+.vscode/
+
+# misc
+*.zip
+*.tar
