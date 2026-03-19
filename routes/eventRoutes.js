@@ -9,7 +9,8 @@ const {
  getMyEvents,
  updateEvent,
  deleteEvent,
- getAllEventsForSuperAdmin   // ⭐ ADD THIS
+ getAllEventsForSuperAdmin,
+ getAllPublicEvents  // ⭐ ADD THIS
 } = require("../controllers/eventController");
 
 
@@ -59,4 +60,5 @@ router.delete(
  deleteEvent
 );
 
+router.get("/public", getAllPublicEvents);
 module.exports = router;

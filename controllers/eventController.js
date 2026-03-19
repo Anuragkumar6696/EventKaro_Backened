@@ -126,3 +126,16 @@ exports.getAllEventsForSuperAdmin = async (req, res) => {
     });
   }
 };
+
+exports.getAllPublicEvents = async (req,res)=>{
+  try{
+
+    const events = await Event.find({ status:"upcoming" })
+      .populate("college","name city logo");
+
+    res.json(events);
+
+  }catch(err){
+    res.status(500).json({ message:"Server Error" });
+  }
+};
