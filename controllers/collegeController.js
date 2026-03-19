@@ -75,36 +75,35 @@ exports.registerCollege = async (req, res) => {
     }
 };
 exports.updateCollegeProfile = async (req, res) => {
-    try {
+  try {
 
-        const collegeId = req.user.college;
+    console.log("API HIT ✅");
 
-        const updateData = {
-            ...req.body
-        };
+    const collegeId = req.user?.college;
 
-        // ⭐ if logo uploaded
-        if (req.file) {
-            updateData.logo = req.file.path;
-        }
+    console.log("COLLEGE ID →", collegeId);
 
-        const updatedCollege = await College.findByIdAndUpdate(
-            collegeId,
-            updateData,
-            { new: true }
-        );
+    const updateData = { ...req.body };
 
-        res.json({
-            message: "College profile updated",
-            updatedCollege
-        });
-
-    } catch (err) {
-        res.status(500).json({
-            message: "Server Error",
-            error: err.message
-        });
+    if (req.file) {
+      updateData.logo = req.file.path;
     }
+
+    const updatedCollege = await College.findByIdAndUpdate(
+      collegeId,
+      updateData,
+      { returnDocument: "after" }
+    );
+
+    res.json({
+      message: "College profile updated",
+      updatedCollege
+    });
+
+  } catch (err) {
+    console.log("ERROR 🔥", err);
+    res.status(500).json({ message: "Server Error" });
+  }
 };
 exports.getApprovedCollegesPublic = async (req, res) => {
   try {

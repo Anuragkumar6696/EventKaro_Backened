@@ -93,3 +93,72 @@ exports.getEventEnquiries = async (req, res) => {
     res.status(500).json({ message: "Server Error", error: err.message });
   }
 };
+/**
+ * POST /api/event-registration/event/:eventId/newsletter
+ * College admin sends bulk email to all interested students
+ */
+
+exports.sendNewsletter = async (req, res) => {
+  try {
+
+    const { eventId } = req.params;
+    const { subject, message } = req.body;
+
+    // 1️⃣ validate event
+    const event = await Event.findById(eventId).populate("college");
+
+    if (!event) {
+      return res.status(404).json({
+        message: "Event not found"
+      });
+    }
+
+    // 2️⃣ check access
+    if (
+      req.user.role !== "collegeadmin" ||
+      req.user.college.toString() !== event.college._id.toString()
+    ) {
+      return res.status(403).json({
+        message: "Forbidden"
+      });
+    }
+
+    // 3️⃣ get all enquiries
+    const enquiries = await EventEnquiry.find({ event: eventId });
+
+    if (!enquiries.length) {
+      return res.status(404).json({
+        message: "No interested users found"
+      });
+    }
+
+    // 4️⃣ collect emails (unique)
+    const emails = [
+      ...new Set(enquiries.map((e) => e.email))
+    ];
+
+    // 5️⃣ send bulk email
+    await sendEmail({
+      to: emails,
+      subject: subject || `Update for ${event.title}`,
+      html: `
+        <h2>${event.title}</h2>
+        <p>${message}</p>
+        <p><strong>College:</strong> ${event.college.name}</p>
+        <br/>
+        <p>Regards,<br/>EventKaro Team</p>
+      `
+    });
+
+    res.json({
+      message: `Newsletter sent to ${emails.length} users`
+    });
+
+  } catch (err) {
+    console.error("❌ sendNewsletter error:", err);
+    res.status(500).json({
+      message: "Server Error",
+      error: err.message
+    });
+  }
+};

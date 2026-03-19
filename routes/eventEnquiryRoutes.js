@@ -12,4 +12,11 @@ router.get("/event/:eventId/enquiries", protect, allowRoles("collegeadmin"), get
 // College admin sends newsletter to all users who submitted enquiry
 // router.post("/newsletter", protect, allowRoles("collegeadmin"), sendNewsletter);
 
+router.post(
+  "/event/:eventId/newsletter",
+  protect,
+  allowRoles("collegeadmin"),
+  sendNewsletter
+);
+
 module.exports = router;

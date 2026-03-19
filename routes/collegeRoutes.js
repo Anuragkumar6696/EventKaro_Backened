@@ -17,7 +17,7 @@ const upload = require("../middleware/upload");
 // ⭐ REGISTER
 router.post("/register", registerCollege);
 
-
+    
 // ⭐ UPDATE PROFILE
 router.patch(
  "/profile",
