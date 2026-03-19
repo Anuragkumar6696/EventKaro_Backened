@@ -68,3 +68,12 @@ exports.rejectCollege = async (req, res) => {
     res.status(500).json({ message: "Server Error", error: err.message });
   }
 };
+// ✅ NEW: Get all approved colleges
+exports.getApprovedColleges = async (req, res) => {
+  try {
+    const colleges = await College.find({ status: "approved" });
+    res.json(colleges);
+  } catch (err) {
+    res.status(500).json({ message: "Server Error", error: err.message });
+  }
+};
