@@ -8,17 +8,31 @@ const {
  createEvent,
  getMyEvents,
  updateEvent,
- deleteEvent
+ deleteEvent,
+ getAllEventsForSuperAdmin   // ⭐ ADD THIS
 } = require("../controllers/eventController");
 
+
+// ⭐ PUBLIC / SUPERADMIN → GET ALL EVENTS
+router.get(
+ "/admin/all",
+ protect,
+ allowRoles("superadmin"),
+ getAllEventsForSuperAdmin
+);
+
+
+// ⭐ COLLEGE ADMIN CREATE EVENT
 router.post(
  "/create",
  protect,
  allowRoles("collegeadmin"),
- upload.array("posters",10),   // ⭐ BULK UPLOAD
+ upload.array("posters",10),
  createEvent
 );
 
+
+// ⭐ COLLEGE ADMIN MY EVENTS
 router.get(
  "/my",
  protect,
@@ -26,6 +40,8 @@ router.get(
  getMyEvents
 );
 
+
+// ⭐ UPDATE EVENT
 router.patch(
  "/:id",
  protect,
@@ -34,6 +50,8 @@ router.patch(
  updateEvent
 );
 
+
+// ⭐ DELETE EVENT
 router.delete(
  "/:id",
  protect,

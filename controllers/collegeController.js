@@ -1,5 +1,35 @@
 const College = require("../models/College");
 const User = require("../models/User");
+const Event = require("../models/Event");
+
+exports.getCollegeWithEvents = async (req, res) => {
+  try {
+
+    const college = await College.findById(req.params.id);
+
+    if (!college) {
+      return res.status(404).json({
+        message: "College not found"
+      });
+    }
+
+    const events = await Event.find({
+      college: college._id,
+      status: "upcoming"
+    });
+
+    res.json({
+      college,
+      events
+    });
+
+  } catch (err) {
+    res.status(500).json({
+      message: "Server Error",
+      error: err.message
+    });
+  }
+};
 
 exports.registerCollege = async (req, res) => {
     try {
@@ -75,4 +105,18 @@ exports.updateCollegeProfile = async (req, res) => {
             error: err.message
         });
     }
+};
+exports.getApprovedCollegesPublic = async (req, res) => {
+  try {
+
+    const colleges = await College.find({ status: "approved" });
+
+    res.json(colleges);
+
+  } catch (err) {
+    res.status(500).json({
+      message: "Server Error",
+      error: err.message
+    });
+  }
 };

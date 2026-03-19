@@ -110,3 +110,19 @@ exports.deleteEvent = async (req, res) => {
         });
     }
 };
+
+exports.getAllEventsForSuperAdmin = async (req, res) => {
+  try {
+
+    const events = await Event.find()
+      .populate("college", "name city");
+
+    res.json(events);
+
+  } catch (err) {
+    res.status(500).json({
+      message: "Server Error",
+      error: err.message
+    });
+  }
+};

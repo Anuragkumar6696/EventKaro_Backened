@@ -26,25 +26,25 @@ exports.login = async (req, res) => {
       }
 
       // ✅ Send email notification that college is approved (optional: only once)
-      if (!college.notified) {
-        await sendEmail({
-          to: user.email,
-          subject: `Your College "${college.name}" is login Successfully!`,
-          html: `
-            <div style="font-family: Arial, sans-serif; padding: 20px;">
-              <h2>Congratulations!</h2>
-              <p>Your college <strong>${college.name}</strong> has been approved on EventKaro.</p>
-              <p>You can now log in and manage your events, students, and registrations.</p>
-              <br/>
-              <p>Regards,<br/><strong>EventKaro Team</strong></p>
-            </div>
-          `,
-        });
+      // if (!college.notified) {
+      //   await sendEmail({
+      //     to: user.email,
+      //     subject: `Your College "${college.name}" is login Successfully!`,
+      //     html: `
+      //       <div style="font-family: Arial, sans-serif; padding: 20px;">
+      //         <h2>Congratulations!</h2>
+      //         <p>Your college <strong>${college.name}</strong> has been approved on EventKaro.</p>
+      //         <p>You can now log in and manage your events, students, and registrations.</p>
+      //         <br/>
+      //         <p>Regards,<br/><strong>EventKaro Team</strong></p>
+      //       </div>
+      //     `,
+      //   });
 
-        // Mark college as notified so we don't send duplicate emails
-        college.notified = true;
-        await college.save();
-      }
+      //   // Mark college as notified so we don't send duplicate emails
+      //   college.notified = true;
+      //   await college.save();
+      // }
     }
 
     // 🔑 Generate JWT token
