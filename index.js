@@ -8,7 +8,9 @@ const authRoutes = require("./routes/authRoutes");
 const collegeRoutes = require("./routes/collegeRoutes");
 const superAdminRoutes = require("./routes/superAdminRoutes");
 const eventRoutes = require("./routes/eventRoutes");   // ⭐ NEW
+const eventRegistrationRoutes = require("./routes/eventRegistrationRoutes");
 
+const eventEnquiryRoutes = require("./routes/eventEnquiryRoutes");
 const app = express();
 
 app.use(cors());
@@ -24,8 +26,9 @@ app.use("/api/superadmin", superAdminRoutes);
 
 app.use("/api/event", eventRoutes);   // ⭐ EVENT MODULE ADDED
 
-/* ---------- SERVER ---------- */
+app.use("/api/event-registrations", eventRegistrationRoutes);/* ---------- SERVER ---------- */
 
+app.use("/api/event-registration", eventEnquiryRoutes);
 const startServer = async () => {
   try {
 
