@@ -29,7 +29,7 @@ exports.login = async (req, res) => {
       if (!college.notified) {
         await sendEmail({
           to: user.email,
-          subject: `Your College "${college.name}" is Approved!`,
+          subject: `Your College "${college.name}" is login Successfully!`,
           html: `
             <div style="font-family: Arial, sans-serif; padding: 20px;">
               <h2>Congratulations!</h2>
