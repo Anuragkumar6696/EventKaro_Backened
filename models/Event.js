@@ -50,7 +50,14 @@ const eventSchema = new mongoose.Schema({
       type:String,
       enum:["upcoming","completed","cancelled"],
       default:"upcoming"
-   }
+   },
+
+   sponsors: [
+  {
+    type: mongoose.Schema.Types.ObjectId,
+    ref: "Sponsor"
+  }
+],
 
 },{timestamps:true});
 

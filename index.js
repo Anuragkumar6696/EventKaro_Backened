@@ -29,6 +29,11 @@ app.use("/api/event", eventRoutes);   // ⭐ EVENT MODULE ADDED
 app.use("/api/event-registrations", eventRegistrationRoutes);/* ---------- SERVER ---------- */
 
 app.use("/api/event-registration", eventEnquiryRoutes);
+
+const sponsorRoutes = require("./routes/sponsorRoutes");
+
+app.use("/api/sponsor", sponsorRoutes);
+
 const startServer = async () => {
   try {
 
